@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   Text,
-  View,
   SafeAreaView,
   FlatList
 } from 'react-native';
@@ -13,7 +12,7 @@ import { useQuery } from '@apollo/client';
 import { FETCH_ITEMS } from '../../graphql/querys';
 import WaitSpinner from '../WaitSpinner';
 
-export default ({navigation}) => {
+export default () => {
   const [categorySelected, setcategorySelected] = useState('All');
   const { data, error, loading } = useQuery(
     FETCH_ITEMS,
@@ -35,7 +34,8 @@ export default ({navigation}) => {
     if(filteredItems.indexOf(obj.category) === -1) filteredItems.push(obj.category);
   })
 
-  let filteredArticles: CardType[] = data.items;
+  const filteredArticles: CardType[] = data.items;
+  
   function categorySelectedHandler(childCategorySelected : CategoryType) {
     setcategorySelected(childCategorySelected.title);
   }
@@ -47,12 +47,14 @@ export default ({navigation}) => {
           <FlatList
             horizontal
             data={filteredItems}
+            keyExtractor={item => item.id}
             renderItem={({ item }) => <Menu item={item} title={item.title} categorySelected={categorySelected} categorySelectedHandler={categorySelectedHandler}/>}
             showsHorizontalScrollIndicator={false}
           />
           <FlatList
             data={filteredArticles}
-            renderItem={({ item }) => <Card item={item} category={categorySelected} navigation={navigation}/>}
+            keyExtractor={item => item.id}
+            renderItem={({ item }) => <Card item={item} category={categorySelected}/>}
             showsHorizontalScrollIndicator={false}
             numColumns={2}
           />

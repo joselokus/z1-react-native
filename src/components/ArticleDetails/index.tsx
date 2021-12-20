@@ -8,14 +8,15 @@ import {
   ScrollView
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import * as RootNavigation from '../../utils/RootNavigation';
 import { CardType } from '../Card/types';
 import styles from './styles';
 
-const onPressCloseDetails = (navigation) => {
-    navigation.goBack()
+const onPressCloseDetails = () => {
+    RootNavigation.goBack();
 };
 
-const ArticleDetails = ({ route, navigation }) => {
+const ArticleDetails = ({route}) => {
 
     const { item } : {item : CardType} = route.params;
 
@@ -24,7 +25,7 @@ const ArticleDetails = ({ route, navigation }) => {
             <SafeAreaView>
                 <ScrollView>
                     <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                        <TouchableOpacity onPress={() => onPressCloseDetails(navigation)}><Text style={{marginLeft: 15, fontSize: 20, color: 'white'}}>X</Text></TouchableOpacity>
+                        <TouchableOpacity onPress={() => onPressCloseDetails()}><Text style={{marginLeft: 15, fontSize: 20, color: 'white'}}>X</Text></TouchableOpacity>
                         <TouchableOpacity onPress={() => console.log('You pressed ♡')}><Text style={{marginRight: 15, fontSize: 20, color: 'white'}}>♡</Text></TouchableOpacity>
                     </View>
                     <View style={styles.containerHeader}>

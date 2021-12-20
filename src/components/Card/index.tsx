@@ -6,20 +6,21 @@ import {
   Image,
   TouchableOpacity
 } from 'react-native';
+import * as RootNavigation from '../../utils/RootNavigation';
 import { CardType } from '../Card/types';
 import styles from './styles';
 
-const onPressListItem = (navigation, item: CardType) => {
-        navigation.navigate('ArticleDetails', { item: item });
-      };
+const onPressListItem = (item: CardType) => {
+  RootNavigation.navigate('ArticleDetails', { item: item });
+};
 
-const Card = ({ item, category, navigation } : {item: CardType, category: string, navigation: () => void}) => {
+const Card = ({ item, category } : {item: CardType, category: string}) => {
 
   if(category === 'All'){
       return (
         <View style={styles.containerChip}>
           <View style={styles.itemAll}>
-              <TouchableOpacity onPress={() => onPressListItem(navigation, item)}>
+              <TouchableOpacity onPress={() => onPressListItem(item)}>
                   <Image
                       source={{
                       uri: item.image,
@@ -40,7 +41,7 @@ const Card = ({ item, category, navigation } : {item: CardType, category: string
     else if(item.category.title === category){
       return (
         <View style={styles.item}>
-            <TouchableOpacity onPress={() => onPressListItem(navigation, item)}>
+            <TouchableOpacity onPress={() => onPressListItem(item)}>
               <View style={{flexDirection: 'row'}}>
                 <Image
                     source={{
